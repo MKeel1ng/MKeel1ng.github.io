@@ -8,3 +8,6 @@ This website is still under construction! I am an almost graduated PhD student, 
 - Processing raw AFM data to generate stifness maps with UNET
 - Generating synthetic cell images using Pix2Pix GAN
 - Generating novel tattoos
+
+## Image Test
+![outlines](https://user-images.githubusercontent.com/67687023/94910324-7ccab200-049c-11eb-8180-0fbddcd6b18d.png)
