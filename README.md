@@ -14,4 +14,4 @@ This website is still under construction! I am an almost graduated PhD student, 
 GAN-generated cell and nucleus outlines
 
 
-###Yes, this page is written ibn markdown, html is coming soon!
+### Yes, this page is written ibn markdown, html is coming soon!
