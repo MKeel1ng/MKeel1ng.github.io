@@ -1,6 +1,6 @@
 ## Introduction
 
-This website is still under construction! I am an almost graduated PhD student, and I'd like to show off some of the projects I've worked on. They are a mix of academic work tied to my study of cells, and also other things that interest me (like tattoos). I hope you find them interesting!
+This website is still under construction! I am an almost graduated PhD student, and I'd like to show off some of the projects I've worked on. They are a mix of academic work tied to my study of cells, and also other things that interest me (like tattoos). I hope you find them interesting! You can contact me via [LinkedIn](https://www.linkedin.com/in/michael-keeling/).
 
 ## Project list
 
