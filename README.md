@@ -25,4 +25,8 @@ So how do we do this? We set up a data generator that returns RGB images for the
 
 So how well do we do? After a lot of training and finetuning , we get a median validation IOU for the nucleus of 0.7. So from images of the CSK, the network can produce a fairly accurate representation of the nucleus. Now this in itself is pretty cool, but there's more! Instead of using all three CSK networks to train the UNET, we can train seperate networks on only one CSK at a time, and compare their performance. Given the same training time and network structure, actin only reaches a 0.5 IOU, while both tubulin and keratin reach the 0.7 IOU acheived by training on combined data. Based on the Universal Approximation Theorem (UAT) any function can be fitted by a sufficiently deep and wide function. Therefore we can use the predictive power of the individual networks to evaluate how much control they have over nuclear shape and size in reality. The fact that our network can score higher when trained on keratin compared to actin indicates that actin has less biological and physical influence on the nuclei of these cells. This is actually what we find using more classical approaches. 
 
+![my_model_256_WIOU_0 71590674 best-worst](https://user-images.githubusercontent.com/67687023/95016443-e688be80-064a-11eb-8439-bb44c147fd44.png)
+
+**
+
 *Yes, this page is written in markdown, html is coming soon!*
