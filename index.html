@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Michael Keeling Blog</title>
+  <link href="./resources/css/index.css" type="text/css" rel="stylesheet">
+</head>
+
+
+<body>
+<div class="mainBody">
+	<div id="banner">
+		<div class="title">
+			<h1  >Michael Keeling - Blog</h1>
+		</div>
+	</div>
+
+	
+	<div id="content">
+			<h2>Introduction</h2>
+			
+				<p id="intro_para">This website is still under construction! I am an almost graduated PhD student,
+					and I'd like to show off some of the projects I've worked on. They are a mix of academic work tied 
+					to my study of cells, and also other things that interest me (like tattoos). I hope you find them interesting!
+					You can contact me via <a href="https://www.linkedin.com/in/michael-keeling/">Linkedin</a>.
+			
+				</p>
+
+				<p> Should I have used a template for this website? Probably. But I just had to go and try my hand at html...</p>
+
+				<h3>Things I've done</h3>
+
+				<ul id="nav_proj">
+					<li ><a class="link" href="#MULTI-UNET">Finding cell nucleus from only CSK images </a></li>
+					<p>Coming Soon: (<a href="#footer">See Teasers</a>)</p>
+					<li>Processing raw AFM data to generate stifness maps with UNET </li>
+					<li>Generating synthetic cell images using Pix2Pix GAN </li>
+					<li>Generating novel tattoos</li>
+				</ul>
+
+				<h3>Publications</h3>
+
+			<ul id="publications">
+			
+			<li> 
+			<a href="https://www.nature.com/articles/s41598-017-05467-x">
+			Withaferin-A Can Be Used to Modulate the Keratin Network of Intermediate Filaments in Human Epidermal Keratinocytes</a> </li>
+			<p>(Wherein we use funky forced fitting to untangle some very entangled variables)</p>
+			<li>
+			<a href="https://www.mdpi.com/1422-0067/21/12/4450">
+		Actomyosin and vimentin cytoskeletal networks regulate nuclear shape, mechanics and chromatin organization </a></li>
+		<p>(Wherein we use all the data to show that a drug works)</p>
+
+		<li>Further contributions to several papers were made applying data analysis, see my <a href="https://www.researchgate.net/profile/Michael_Keeling2">ResearchGate</a> </li>
+
+		</ul>
+	
+
+	<div id="MULTI-UNET">
+
+		<h2>1. Finding what you can't see - semantic segmentation on cell nuclei form cytoskeletal images</h2>
+
+
+	<p>Finding the outlines cell nuclei from fluorescence images is a common task. Thresholding methods can do a reasonable job, 
+	but recently semantic segmentation based techniques have been emerging with great success. 
+	Most of these techniques use the UNET network architecture. By now this is a fairly trivial task, 
+	so why don't we step it up a notch? Instead of using images of the nucleus to find nuclear outline, 
+	why not try using images of the cell cytoskeleton? Code for this projet is available on 
+	<a href="https://github.com/MKeel1ng/MULTI-CHANNEL-UNET">GitHub</a>.
+	</p>
+
+	<p>Quick bio summary: human cells have a nucleus sitting inside of them which houses all their DNA. Outside the nucleus, 
+	in the cell body, is the cytoskeleton: the cell's structures that give it strength and allow it to move - sort of like our
+	 muscles and bones (but cooler). The cytoskelton is made up of three seperate networks of proteins that all have slightly
+	  different roles. We can image them by tagging them with flourescent antibodies that emit a specific wavelength and taking 
+	  an image only of that color.</p>
+
+	<figure>
+	<img src="./resources/images/3cskplus.png" alt="CSK and nuclear images">
+	<figcaption>Nucleus and CSK images of the same cell taken at 63x magnification</figcaption>
+	</figure>
+
+
+	<p>So how do we do this? I found a great example on semantic segmentation on
+	 <a href="https://towardsdatascience.com/a-keras-pipeline-for-image-segmentation-part-1-6515a421157d">towardsdatascience</a>,
+	 by Rwiddhi Chakraborty. I had to edit it to work for my data, which uses multiple classes, so it needs to be one-hot encoded and 
+	 can't use binary cross-entropy any more. We set up a data generator that returns RGB images for the CSK networks as inputs and a one hot 
+	encoded mask of the cell outline and nucleus as outputs. We augment these with random flipping. Network structure is a 
+	vanilla UNET, with a softmax final activation layer with as many filters as there are classes. We use a weighted categorical cross-entropy loss. Ideally I'd use an
+	 IOU loss, but it is hard to write it as a loss since it isn't differentiable. We keep the IOU as a metric instead. IOU, 
+	 or intersection over union, is a measure of how well the a mask (in this case the nucleus) is predicted. It penalises
+	  the network for false positives.</p>
+
+	<figure>
+	<img src="./resources/images/IOUexample.png" alt="IOU description">
+	<figcaption>Clockwise: Overlap of nucleus mask and prediction, Intersection, IOU value, Union</figcaption>
+	</figure>
+
+	<p>So how well do we do? After a lot of training and finetuning , we get a median validation IOU for the nucleus of 0.7.
+	 So from images of the CSK, the network can produce a fairly accurate representation of the nucleus. Now this in itself
+	  is pretty cool, but there's more! Instead of using all three CSK networks to train the UNET, we can train seperate networks
+	   on only one CSK at a time, and compare their performance. Given the same training time and network structure, actin only 
+	   reaches a 0.5 IOU, while both tubulin and keratin reach the 0.7 IOU acheived by training on combined data. Based on the
+	    Universal Approximation Theorem (UAT) any function can be fitted by a sufficiently deep and wide function. Therefore
+		 we can use the predictive power of the individual networks to evaluate how much control they have over nuclear shape
+		  and size in reality. The fact that our network can score higher when trained on keratin compared to actin indicates 
+		  that actin has less biological and physical influence on the nuclei of these cells. This is actually what we find 
+		  using more classical approaches.</p>
+
+	<figure>
+	<img id="iou" src="./resources/images/res.png" alt="Segmentation results">
+	<figcaption>Left to right: Input, ground truth, UNET result. Top to bottom: worst,median, best results</figcaption>
+	</figure>
+
+
+	</div>
+
+	<h4 class"totop"><a href="#">Back To Top</a></h4>
+
+	<div id="teasers">
+	<h2>Teasers</h2>
+	<p>
+	While I haven't finished writing the posts on some of ny work, here are some images to keep you interested!
+	</p>
+
+
+	<div id="teaserFigs">
+
+		<h3>AFM and AI</h3>
+
+	<figure>
+		<img id="iou" src="./resources/images/autoenc_example.png" alt="Autoencoding AFM curves">
+		<figcaption>Autoencoding AFM force curves: High fidelity reconstruction of 256 point long curve from encoding into only 3 points!</figcaption>
+	</figure>
+
+	<figure>
+		<img id="iou" src="./resources/images/good_afm_example3.png" alt="Regression to AFM force maps">
+		<figcaption>Left: Stiffness map of skin cell from AFM data using the Hertz model. Right: UNET trained on raw force curves can output high quality stiffness map significantly faster.</figcaption>
+	</figure>
+
+	<h3>CELL-GAN: AI generation and manipulation of fibroblast images</h3>
+
+	<figure>
+		<img id="iou" src="./resources/images/outlines.png" alt="GAN-generated cell outines">
+		<figcaption>CELL-GAN step 1: generate cell and nuclear outlines</figcaption>
+	</figure>
+
+	<figure>
+		<img id="iou" src="./resources/images/inpaintTriple.png" alt="Pix2Pix human fibroblasts">
+		<figcaption>CELL-GAN step 2: Teach Pix2Pix to fill in realistic cell content</figcaption>
+	</figure>
+
+	<figure>
+		<img id="iou" src="./resources/images/genOutlineTriple.png" alt="Outputs based on AI-generated inputs">
+		<figcaption>CELL-GAN 3: Use Pix2Pix to fill in AI-generated outlines (nuclei removed)</figcaption>
+	</figure>
+
+
+	<figure>
+		<img id="iou" src="./resources/images/editedTriple.png" alt="editing human fibroblasts images">
+		<figcaption>CELL-GAN: Edit input masks to observe changes (nuclei removed)</figcaption>
+	</figure>
+
+	
+	<figure>
+	<img id="iou" src="./resources/images/morphStraightGEN.gif" alt="AI generated tattoos">
+	<figcaption>TATTOO-GAN: some very preliminary tattoos generated by a GAN</figcaption>
+	</figure>
+
+	<h3>AI Tattoo generation</h3>
+		
+	<figure>
+		<img id="iou" src="./resources/images/GANTAT.png" alt="editing human fibroblasts images">
+		<figcaption>CELL-GAN: Edit input masks to observe changes (nuclei removed)</figcaption>
+	</figure>
+
+	<h4 class"totop"><a href="#">Back To Top</a></h4>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+
+	<div id="footer">
+		<div >
+
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+</body>
+</html>
