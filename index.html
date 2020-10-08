@@ -111,8 +111,13 @@
 	<figcaption>Left to right: Input, ground truth, UNET result. Top to bottom: worst,median, best results</figcaption>
 	</figure>
 
-
-	</div>
+    <p>Now if you look closely at the first image of the CSK networks, you will notice that the keratin and tubulin networks both have features unique to the nucleus.
+	Either a dimmer background, in the case of tubulin, or a special cage structure, like in the case of keratin. Following up on this we we split the
+	CSK images into fibre and background components using a smoothed rolling ball background subtraction method.
+	The results were interesting, in that the network could be trained just as effectively on the background and fibre components as on the complete images. 
+	(While the IOU was the same, the nucear outlines did become a little more rough.) This indicates that the nuclear position and size is controlled by both
+	 the fine fibre structure and the broad distribution of the fibres.</p>
+	</div> 
 
 	<h4 class"totop"><a href="#">Back To Top</a></h4>
 
