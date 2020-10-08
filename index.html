@@ -117,6 +117,13 @@
 	The results were interesting, in that the network could be trained just as effectively on the background and fibre components as on the complete images. 
 	(While the IOU was the same, the nucear outlines did become a little more rough.) This indicates that the nuclear position and size is controlled by both
 	 the fine fibre structure and the broad distribution of the fibres.</p>
+
+	 <p>
+	 Overall these results are very exciting. First, because we can do a very good job of segmenting an object from images 
+	 not of that object. Second, by using the predictive power of the indiviual structures we can evaluate their infuence ovr the target structure - the nucleus.
+	  Thus we can draw conclusions on their biological role. Finally, if you aren't very interested in the nucleus and are squeezed for imaging channels, 
+	  with this apporach you could always add it in later, as an estimated image. While we only acheived an IOU of 0.7 in this projet, that was off of only ~1000 training images.
+	   Ten times more and we'd likely get some very good IOU scores.</p>
 	</div> 
 
 	<h4 class"totop"><a href="#">Back To Top</a></h4>
