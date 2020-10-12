@@ -15,11 +15,9 @@
   position: fixed;
   width: 100%;
   z-index: 10;
-
-  background-color:black;
-
-
-
+  background-color: black;
+  background-image: url("../images/banner.png");
+  background-size: cover;
   background-position: center;
   
   background-repeat: no-repeat;
@@ -30,6 +28,7 @@
   height:6rem;
   background-size: cover;
 }
+
 
 
 #footer{
@@ -86,11 +85,6 @@ display:block;
 z-index: 11;
 
 }
-
-.title h1{
-  color:whitesmoke;
-}
-
 
 
 .link{
